@@ -18,6 +18,8 @@ function GameState() {
 
     this.scene.add( new THREE.AxisHelper( 500 ) );
 
+    this.loader = new THREE.TGALoader();
+
     //Actual game map logic now
     this.map = new GameMap(30,30);
     ping.maze.GenerateMaze(this.map);
@@ -139,30 +141,36 @@ GameState.prototype.setLight = function() {
 GameState.prototype.buildGrid = function() {
 
     var SQUARE_SIZE = 200;
-    var blackMaterial =
+
+    var floorTexture =
+            this.loader.load("textures/katsbits-rock3set4/stone4_e.tga")
+        , floorMaterial =
+            new THREE.MeshPhongMaterial( { color: 0xffffff, map: floorTexture } )
+
+        , blackMaterial =
         new THREE.MeshLambertMaterial(
             {
                 color: 0x000000
             }
-        ),
+        )
 
-        whiteMaterial =
+        , whiteMaterial =
         new THREE.MeshLambertMaterial(
             {
                 color: 0xFFFFFF
             }
-        ),
-        redMaterial = new THREE.MeshLambertMaterial({color:0xFF0000}),
-        greenMaterial = new THREE.MeshLambertMaterial({color:0x006600}),
-        northMaterial = new THREE.MeshLambertMaterial({color:0x000066}),
-        yellowMaterial = new THREE.MeshLambertMaterial({color:0xFFFF00}),
+        )
+        , redMaterial = new THREE.MeshLambertMaterial({color:0xFF0000})
+        , greenMaterial = new THREE.MeshLambertMaterial({color:0x006600})
+        , northMaterial = new THREE.MeshLambertMaterial({color:0x000066})
+        , yellowMaterial = new THREE.MeshLambertMaterial({color:0xFFFF00})
 
-        geometry = new THREE.BoxGeometry( SQUARE_SIZE, 5, SQUARE_SIZE ),
-        northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE, 5 ),
-        eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE , 5 ),
-        adjustX = 0,
-        adjustY = 0,
-        northWall, southWall, eastWall, westWall;
+        , geometry = new THREE.BoxGeometry( SQUARE_SIZE, 5, SQUARE_SIZE )
+        , northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE, 5 )
+        , eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE , 5 )
+        , adjustX = 0
+        , adjustY = 0
+        , northWall, southWall, eastWall, westWall;
 
 
 
@@ -171,9 +179,15 @@ GameState.prototype.buildGrid = function() {
         for(var pos = 0; pos < this.map.elements.length; pos++){
             var myCell = this.map.elements[pos];
 
-            myColor = ((myCell.x + myCell.y) % 2 == 0)
-                ? whiteMaterial
-                : blackMaterial;
+            //@todo add a use texture flag
+            if (true) {
+                myColor = floorMaterial;
+            } else {
+                myColor = ((myCell.x + myCell.y) % 2 == 0)
+                    ? whiteMaterial
+                    : blackMaterial;
+            }
+
 
 
 
@@ -196,8 +210,6 @@ GameState.prototype.buildGrid = function() {
                     (SQUARE_SIZE * myCell.y) + adjustY - (SQUARE_SIZE/2)
                     );
 
-                //this.scene.add(northWall);
-                console.log(myCell, myCell.walls);
             }
             if (myCell.southWall) {
                 southWall = new THREE.Mesh(northWallGeo, whiteMaterial);
