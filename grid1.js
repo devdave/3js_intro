@@ -146,8 +146,8 @@ GameState.prototype.buildGrid = function() {
         geometry = new THREE.BoxGeometry( SQUARE_SIZE, 5, SQUARE_SIZE ),
         northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE, 5 ),
         eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE , 5 ),
-        adjustX = -SQUARE_SIZE,
-        adjustY = -SQUARE_SIZE,
+        adjustX = 0,
+        adjustY = 0,
         northWall, southWall, eastWall, westWall;
 
 
@@ -166,7 +166,7 @@ GameState.prototype.buildGrid = function() {
             var cube = new THREE.Mesh( geometry, myColor );
             cube.position.set(
                 (SQUARE_SIZE * myCell.x) + adjustX,
-                -10,
+                1,
                 (SQUARE_SIZE * myCell.y) + adjustY
 
             );
@@ -198,9 +198,9 @@ GameState.prototype.buildGrid = function() {
             if (myCell.eastWall) {
                 eastWall = new THREE.Mesh( eastWallGeo, redMaterial);
                 eastWall.position.set(
-                    (SQUARE_SIZE * myCell.x) - (SQUARE_SIZE/2),
+                    (SQUARE_SIZE * myCell.x) + (SQUARE_SIZE/2),
                     (SQUARE_SIZE/2),
-                    (SQUARE_SIZE * myCell.y) - SQUARE_SIZE
+                    (SQUARE_SIZE * myCell.y)
                     );
                 //eastWall.rotation.applyEuler(new THREE.Vector3(1,0,0));
                 eastWall.rotation.y = (90 * Math.PI) / 180;
@@ -222,28 +222,6 @@ GameState.prototype.buildGrid = function() {
 
 
         }
-
-        //for(var col = 0; col < 10; col++){
-        //    for(var row = 0; row < 10; row++){
-        //        var myColor = (col + row) % 2 == 0
-        //            ? whiteMaterial
-        //            : blackMaterial;
-        //        if ( (row + col) % 2 == 0) {
-        //            var cube = new THREE.Mesh( geometry, myColor );
-        //            //code
-        //        }
-        //        else {
-        //
-        //            var cube = new THREE.Mesh( geometry2, myColor );
-        //
-        //        }
-        //        cube.position.z = (SQUARE_SIZE * col) + adjustX
-        //        cube.position.x = (SQUARE_SIZE * row) + adjustY;
-        //        cube.position.y = 0;
-        //        this.scene.add(cube);
-        //        this.gridMap.push(cube);
-        //    }
-        //}
 
 }
 
