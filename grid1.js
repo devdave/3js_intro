@@ -37,15 +37,15 @@ GameState.prototype.build = function() {
     this.setLight();
     this.buildGrid();
 
-    this.camera.matrix.set.apply(this.camera.matrix,
-    [-0.46561816334724426, 1.5722249058214288e-9, 0.8849857449531555, 0, 0.6066539883613586, 0.7280765771865845, 0.3191792666912079, 0, -0.6443374156951904, 0.6854957938194275, -0.339005708694458, 0, -792.3116455078125, 958.680908203125, -527.8226928710938, 1]
-    );
-    this.camera.position.y = 1750;
-    this.camera.position.x = 900;
-    this.camera.position.z = 900;
-    //this.control = new THREE.FirstPersonControls(this.camera);
-    //this.control.movementSpeed = 200;
-    //this.control.lookSpeed = 0.075;
+    //this.camera.matrix.set.apply(this.camera.matrix,
+    //[-0.46561816334724426, 1.5722249058214288e-9, 0.8849857449531555, 0, 0.6066539883613586, 0.7280765771865845, 0.3191792666912079, 0, -0.6443374156951904, 0.6854957938194275, -0.339005708694458, 0, -792.3116455078125, 958.680908203125, -527.8226928710938, 1]
+    //);
+    //this.camera.position.y = 1750;
+    //this.camera.position.x = 900;
+    //this.camera.position.z = 900;
+    this.control = new THREE.FirstPersonControls(this.camera);
+    this.control.movementSpeed = 200;
+    this.control.lookSpeed = 0.075;
 
 }
 
