@@ -107,8 +107,8 @@ GameState.prototype.drawWireGrid = function () {
 
 GameState.prototype.setSpotLight = function() {
     this.spotLight = new THREE.SpotLight(
-        0xDED718, //Color
-        0.8, //intensity
+        0xF2EF8A, //Color
+        0.9, //intensity
         -10,
         30
     );
