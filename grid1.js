@@ -19,7 +19,7 @@ function GameState() {
     this.scene.add( new THREE.AxisHelper( 500 ) );
 
     //Actual game map logic now
-    this.map = new GameMap(10,10);
+    this.map = new GameMap(30,30);
     ping.maze.GenerateMaze(this.map);
 
     this.mini_ctx = document.getElementById("minimap").getContext("2d");
@@ -124,7 +124,7 @@ GameState.prototype.setLight = function() {
 
 GameState.prototype.buildGrid = function() {
 
-    var SQUARE_SIZE = 150;
+    var SQUARE_SIZE = 200;
     var blackMaterial =
         new THREE.MeshLambertMaterial(
             {
