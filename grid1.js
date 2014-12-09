@@ -47,6 +47,7 @@ GameState.prototype.build = function() {
     this.control = new THREE.FirstPersonControls(this.camera);
     this.control.movementSpeed = 200;
     this.control.lookSpeed = 0.075;
+    this.control.constrainVertical = true;
 
 }
 
@@ -110,6 +111,7 @@ GameState.prototype.setSpotLight = function() {
         30
     );
     this.spotLight.position.z = 15;
+    this.spotLight.position.y = 5;
     this.spotLight.target = this.camera;
     this.camera.add(this.spotLight);
 }
@@ -322,7 +324,10 @@ GameState.prototype.render = function() {
     if (typeof this.control != "undefined") {
         var delta = this.clock.getDelta();
         this.control.update(delta); // Move camera
+        //@TODO find a better way to lock this
+        this.camera.position.y = 100;
     }
+
 
 
     this.renderer.render( this.scene, this.camera );
