@@ -3,7 +3,7 @@
 	<head>
 		<title>My first Three.js app</title>
 		<style>
-			body { margin: 0; }
+			body { margin: 0; overflow:hidden; }
 			canvas { width: 100%; height: 100%; z-index: 10 }
             #minimap {
                 width: 100px;
@@ -23,12 +23,13 @@
                 right: 10px;
                 z-index:  100;
                 background-color: white;
+                white-space: pre;
             }
 		</style>
 	</head>
 	<body>
         <canvas id="minimap"></canvas>
-        <div id="campos"></div>
+        <textarea id="campos"></textarea>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r69/three.js"></script>
 		<script src="js/FirstPersonControls.js"></script>
 		<script src="js/ping.debug.js"></script>
