@@ -24,7 +24,7 @@ function GameState() {
 
     this.mini_ctx = document.getElementById("minimap").getContext("2d");
 
-    this.map.render(this.mini_ctx);
+
 
 
     this.build();
@@ -338,7 +338,16 @@ GameState.prototype.render = function() {
     this.renderer.render( this.scene, this.camera );
     //this.adjust();
 
-    document.getElementById("campos").innerHTML = JSON.stringify(this.camera)
+    document.getElementById("campos").innerHTML =
+        JSON.stringify(
+            {
+                position: this.camera.position
+                , rotation: this.camera.rotation
+            }, false, 4);
+
+    this.map.render(this.mini_ctx);
+
+
 
 }
 
