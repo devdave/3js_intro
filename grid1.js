@@ -34,7 +34,8 @@ function GameState() {
 GameState.prototype.build = function() {
     this.buildCamera();
     this.drawWireGrid();
-    this.setLight();
+    //this.setLight();
+    this.setSpotLight()
     this.buildGrid();
 
     //this.camera.matrix.set.apply(this.camera.matrix,
@@ -101,9 +102,20 @@ GameState.prototype.drawWireGrid = function () {
 }
 
 
+GameState.prototype.setSpotLight = function() {
+    this.spotLight = new THREE.SpotLight(
+        0xDED718, //Color
+        0.8, //intensity
+        -10,
+        30
+    );
+    this.spotLight.position.z = 15;
+    this.spotLight.target = this.camera;
+    this.camera.add(this.spotLight);
+}
 
 GameState.prototype.setLight = function() {
-    this.pointLight = new THREE.PointLight(0xFFFFFF);
+    this.pointLight = new THREE.PointLight(0xDED718, 0.5, -1);
     //this.flashLight = new THREE.SpotLight(0xFFFFFF);
 
     //// set its position
@@ -128,7 +140,7 @@ GameState.prototype.buildGrid = function() {
     var blackMaterial =
         new THREE.MeshLambertMaterial(
             {
-                color: 0x00F00F
+                color: 0x000000
             }
         ),
 
@@ -175,7 +187,7 @@ GameState.prototype.buildGrid = function() {
             this.gridMap.push(cube);
 
             if (myCell.northWall) {
-                northWall = new THREE.Mesh( northWallGeo, northMaterial);
+                northWall = new THREE.Mesh( northWallGeo, whiteMaterial);
                 northWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
                     (SQUARE_SIZE/2),
@@ -186,7 +198,7 @@ GameState.prototype.buildGrid = function() {
                 console.log(myCell, myCell.walls);
             }
             if (myCell.southWall) {
-                southWall = new THREE.Mesh(northWallGeo, yellowMaterial);
+                southWall = new THREE.Mesh(northWallGeo, whiteMaterial);
                 southWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
                     (SQUARE_SIZE/2),
@@ -196,7 +208,7 @@ GameState.prototype.buildGrid = function() {
                 this.scene.add(southWall);
             }
             if (myCell.eastWall) {
-                eastWall = new THREE.Mesh( eastWallGeo, redMaterial);
+                eastWall = new THREE.Mesh( eastWallGeo, whiteMaterial);
                 eastWall.position.set(
                     (SQUARE_SIZE * myCell.x) + (SQUARE_SIZE/2),
                     (SQUARE_SIZE/2),
