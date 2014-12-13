@@ -99,6 +99,7 @@ GameState.prototype.drawWireGrid = function () {
     );
 
     this.grid = new THREE.Mesh( geometry, material );
+    this.grid.position.y = 200;
     this.grid.rotation.order = 'YXZ';
     this.grid.rotation.y = - Math.PI / 2;
     this.grid.rotation.x = - Math.PI / 2;
