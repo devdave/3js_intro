@@ -172,6 +172,10 @@ GameState.prototype.buildGrid = function() {
         //, northMaterial     = new THREE.MeshLambertMaterial({color:0x000066})
         //, yellowMaterial    = new THREE.MeshLambertMaterial({color:0xFFFF00})
 
+        , geometry = new THREE.BoxGeometry(
+            this.map.height * SQUARE_SIZE,
+            5,
+            this.map.width * SQUARE_SIZE )
         , northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE*2, 5 )
         , eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE+5, SQUARE_SIZE*2 , 5 )
         , adjustX = 0
@@ -184,37 +188,39 @@ GameState.prototype.buildGrid = function() {
 
         this.gridMap = [];
 
-        for(var pos = 0; pos < this.map.elements.length; pos++){
-            var myCell = this.map.elements[pos];
+        myColor = floorMaterial;
+        //@todo add a use texture flag
 
-            //@todo add a use texture flag
-            if (true) {
-                myColor = floorMaterial;
-            } else {
-                myColor = ((myCell.x + myCell.y) % 2 == 0)
-                    ? whiteMaterial
-                    : blackMaterial;
-            }
-
-
-
-
-            var cube = new THREE.Mesh( geometry, myColor );
+        var cube = new THREE.Mesh( geometry, myColor );
             cube.position.set(
-                (SQUARE_SIZE * myCell.x) + adjustX,
+                (((this.map.height - 1) * SQUARE_SIZE)/2) + adjustX,
                 1,
-                (SQUARE_SIZE * myCell.y) + adjustY
+                (((this.map.width - 1) * SQUARE_SIZE)/2) + adjustY
 
             );
 
-            this.scene.add(cube);
-            this.gridMap.push(cube);
+        var cube2 = new THREE.Mesh( geometry, myColor );
+            cube2.position.set(
+                (((this.map.height - 1) * SQUARE_SIZE)/2) + adjustX,
+                SQUARE_SIZE*2,
+                (((this.map.width - 1) * SQUARE_SIZE)/2) + adjustY
+
+            );
+        this.cube2 = cube2;
+        this.scene.add(cube);
+        this.scene.add(cube2);
+
+
+        for(var pos = 0; pos < this.map.elements.length; pos++){
+            var myCell = this.map.elements[pos];
+
+
 
             if (myCell.northWall) {
                 northWall = new THREE.Mesh( northWallGeo, wallMaterial);
                 northWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
-                    (SQUARE_SIZE/2),
+                    (SQUARE_SIZE),
                     (SQUARE_SIZE * myCell.y) + adjustY - (SQUARE_SIZE/2)
                     );
 
@@ -223,7 +229,7 @@ GameState.prototype.buildGrid = function() {
                 southWall = new THREE.Mesh(northWallGeo, wallMaterial);
                 southWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
-                    (SQUARE_SIZE/2),
+                    (SQUARE_SIZE),
                     (SQUARE_SIZE * myCell.y) + adjustY + (SQUARE_SIZE/2)
                     );
 
@@ -233,7 +239,7 @@ GameState.prototype.buildGrid = function() {
                 eastWall = new THREE.Mesh( eastWallGeo, wallMaterial);
                 eastWall.position.set(
                     (SQUARE_SIZE * myCell.x) + (SQUARE_SIZE/2),
-                    (SQUARE_SIZE/2),
+                    (SQUARE_SIZE),
                     (SQUARE_SIZE * myCell.y)
                     );
                 //eastWall.rotation.applyEuler(new THREE.Vector3(1,0,0));
