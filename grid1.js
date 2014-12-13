@@ -34,6 +34,8 @@ function GameState() {
 }
 
 GameState.prototype.build = function() {
+
+    this.scene.fog = new THREE.FogExp2( 0x393837 , 0.0025 );
     this.buildCamera();
     this.drawWireGrid();
     //this.setLight();
