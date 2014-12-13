@@ -146,10 +146,14 @@ GameState.prototype.buildGrid = function() {
     var SQUARE_SIZE = 200;
 
     var floorTexture =
-            this.loader.load("textures/katsbits-rock3set4/stone4_e.tga")
+            this.loader.load("textures/katsbits-rock3set4/stone4_c.tga")
         , floorMaterial =
-            new THREE.MeshPhongMaterial( { color: 0xffffff, map: floorTexture } )
+            new THREE.MeshPhongMaterial( { color: 0xffffff, map: floorTexture, wrapAround: true } )
 
+        ,wallTexture =
+            this.loader.load("textures/katsbits-stonewall/wall_512_5_05.tga")
+        ,wallMaterial =
+            new THREE.MeshPhongMaterial({color: 0xFFFFFF, map: wallTexture})
         , blackMaterial =
         new THREE.MeshLambertMaterial(
             {
