@@ -70,7 +70,7 @@ GameState.prototype.buildCamera = function() {
         45,
         this.width / this.height,
         1,
-        2000
+        5000
     );
 
     this.camera.up = new THREE.Vector3(0,1,0);
