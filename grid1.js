@@ -167,19 +167,20 @@ GameState.prototype.buildGrid = function() {
                 color: 0xFFFFFF
             }
         )
-        , redMaterial = new THREE.MeshLambertMaterial({color:0xFF0000})
-        , greenMaterial = new THREE.MeshLambertMaterial({color:0x006600})
-        , northMaterial = new THREE.MeshLambertMaterial({color:0x000066})
-        , yellowMaterial = new THREE.MeshLambertMaterial({color:0xFFFF00})
+        //, redMaterial       = new THREE.MeshLambertMaterial({color:0xFF0000})
+        //, greenMaterial     = new THREE.MeshLambertMaterial({color:0x006600})
+        //, northMaterial     = new THREE.MeshLambertMaterial({color:0x000066})
+        //, yellowMaterial    = new THREE.MeshLambertMaterial({color:0xFFFF00})
 
-        , geometry = new THREE.BoxGeometry( SQUARE_SIZE, 5, SQUARE_SIZE )
-        , northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE, 5 )
-        , eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE , 5 )
+        , northWallGeo = new THREE.BoxGeometry( SQUARE_SIZE, SQUARE_SIZE*2, 5 )
+        , eastWallGeo  = new THREE.BoxGeometry( SQUARE_SIZE+5, SQUARE_SIZE*2 , 5 )
         , adjustX = 0
         , adjustY = 0
         , northWall, southWall, eastWall, westWall;
 
 
+        floorTexture.wrapS = (floorTexture.wrapT = THREE.RepeatWrapping);
+        floorTexture.repeat.set(8,8);
 
         this.gridMap = [];
 
@@ -210,7 +211,7 @@ GameState.prototype.buildGrid = function() {
             this.gridMap.push(cube);
 
             if (myCell.northWall) {
-                northWall = new THREE.Mesh( northWallGeo, whiteMaterial);
+                northWall = new THREE.Mesh( northWallGeo, wallMaterial);
                 northWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
                     (SQUARE_SIZE/2),
@@ -219,7 +220,7 @@ GameState.prototype.buildGrid = function() {
 
             }
             if (myCell.southWall) {
-                southWall = new THREE.Mesh(northWallGeo, whiteMaterial);
+                southWall = new THREE.Mesh(northWallGeo, wallMaterial);
                 southWall.position.set(
                     (SQUARE_SIZE * myCell.x) + adjustX,
                     (SQUARE_SIZE/2),
@@ -229,7 +230,7 @@ GameState.prototype.buildGrid = function() {
                 this.scene.add(southWall);
             }
             if (myCell.eastWall) {
-                eastWall = new THREE.Mesh( eastWallGeo, whiteMaterial);
+                eastWall = new THREE.Mesh( eastWallGeo, wallMaterial);
                 eastWall.position.set(
                     (SQUARE_SIZE * myCell.x) + (SQUARE_SIZE/2),
                     (SQUARE_SIZE/2),
