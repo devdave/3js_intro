@@ -182,7 +182,6 @@ GameState.prototype.buildGrid = function() {
         , adjustY = 0
         , northWall, southWall, eastWall, westWall;
 
-
         floorTexture.wrapS = (floorTexture.wrapT = THREE.RepeatWrapping);
         floorTexture.repeat.set(8,8);
 
@@ -342,6 +341,7 @@ KeyState.prototype = {
 
 
 var kState = new KeyState();
+
 GameState.prototype.render = function() {
     requestAnimationFrame( this.render.bind(this) );
     if (kState.state.locked) {
@@ -351,8 +351,11 @@ GameState.prototype.render = function() {
         var delta = this.clock.getDelta();
         this.control.update(delta); // Move camera
         //@TODO find a better way to lock this
-        this.camera.position.y = 100;
+        //this.camera.position.y = 100;
     }
+
+
+
 
 
 
