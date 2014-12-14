@@ -351,7 +351,7 @@ GameState.prototype.render = function() {
         var delta = this.clock.getDelta();
         this.control.update(delta); // Move camera
         //@TODO find a better way to lock this
-        //this.camera.position.y = 100;
+        this.camera.position.y = 100;
     }
 
 
