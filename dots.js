@@ -31,7 +31,7 @@ GameState.prototype.buildCamera = function(){
         45,
         this.width / this.height,
         1,
-        20000
+        5000
     );
 
     this.camera.up = new THREE.Vector3(0,1,0);
@@ -47,7 +47,7 @@ GameState.prototype.buildParticles = function() {
 
     this.pMaterial = new THREE.PointCloudMaterial({
           color: 0x0000FF,
-          size: 20,
+          size: 10,
           map: THREE.ImageUtils.loadTexture(
             "images/particle.png"
           ),
@@ -117,7 +117,7 @@ GameState.prototype.render = function(){
     this.particleSystem.position[dir] += mySpeed;
 
 
-    if (this.particleSystem.position[dir] > -2000) {
+    if (this.particleSystem.position[dir] > -2000 && mySpeed >-300) {
         speed = -.5;
 
         if(this.particleSystem.material.color.r < 0){
