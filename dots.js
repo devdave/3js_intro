@@ -31,7 +31,7 @@ GameState.prototype.buildCamera = function(){
         45,
         this.width / this.height,
         1,
-        5000
+        7000
     );
 
     this.camera.up = new THREE.Vector3(0,1,0);
@@ -93,6 +93,7 @@ GameState.prototype.buildParticles = function() {
         this.particleSystem.sortParticles = true;
         this.particleSystem.position.z = -15000;
 
+        //this.particleSystem.scale.x = 0.6;
         // add it to the scene
         this.scene.add(this.particleSystem);
 
@@ -101,6 +102,9 @@ GameState.prototype.buildParticles = function() {
 
     var speed =   .5;
     var mySpeed = speed;
+    var blueDir = 0.01;
+    var redDir  = 0.01;
+    var camReverse = false;
 GameState.prototype.render = function(){
     requestAnimationFrame( this.render.bind(this) );
     this.renderer.render(this.scene, this.camera);
@@ -117,27 +121,49 @@ GameState.prototype.render = function(){
     this.particleSystem.position[dir] += mySpeed;
 
 
-    if (this.particleSystem.position[dir] > -2000 && mySpeed >-300) {
-        speed = -.5;
 
-        if(this.particleSystem.material.color.r < 0){
-            this.particleSystem.material.color.r += 0.001
-        } else if(this.particleSystem.material.color.r > 1) {
-        this.particleSystem.material.color.r -= 0.001
+    if (this.particleSystem.position[dir] > -2000) {
+        mySpeed = -mySpeed;
+        speed = -.5;
+        if (camReverse == false) {
+            this.camera.rotation.x = 180 * (Math.PI/180);
+            camReverse = true;
         }
+
+
+        if(this.particleSystem.material.color.g < -4000){
+            redDir = 0.01;
+        } else if(this.particleSystem.material.color.g > 1) {
+            redDir = -0.01;
+        }
+        this.particleSystem.material.color.g += redDir;
+
     }
-    if (this.particleSystem.position[dir] < -5000) {
+    else if (this.particleSystem.position[dir] < -15000) {
         speed = .5
-        this.particleSystem.material.color.b -= 0.001
+        mySpeed = -mySpeed;
+        if (camReverse === true) {
+            this.camera.rotation.x = 0;// * (Math.PI/180);
+            camReverse = false;
+        }
+
+        if (this.particleSystem.material.color.r < 0) {
+            blueDir = 0.01;
+        } else if (this.particleSystem.material.color.r > 1) {
+            blueDir = -0.01;
+        }
+        this.particleSystem.material.color.r += blueDir;
+
     }
     this.camera.rotation.z += .01;
-    //    speed = -1;
-    //    mySpeed = 10;
-    //} else if (this.particleSystem.position[dir] < -20000) {
-    //    speed = 1;
-    //    mySpeed = -10;
-    //}
-    mySpeed += speed;
+
+    var tempSpeed = Math.abs(mySpeed + speed);
+    if (tempSpeed > 60){
+        mySpeed = ((speed < 0 ? -60 : 60));
+    } else {
+        mySpeed += speed;
+    }
+
 
     console.log(this.particleSystem.position, mySpeed, speed);
 
